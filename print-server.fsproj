@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <!-- Brother bpac x64 SDK doesn't work properly with .NET Core -->
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    <RootNamespace>print_server</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Configuration.fs" />
+    <Compile Include="Bpac.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="Attendee.fs" />
+    <Compile Include="QR.fs" />
+    <Compile Include="Printer.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="print-server.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(ProjectDir)assets\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Import Project=".paket\Paket.Restore.targets" />
+</Project>

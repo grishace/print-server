@@ -1,0 +1,12 @@
+{
+    "Templates": {
+        "TemplatesFolder": "./assets/templates/",
+        "Default": "template.lbx",
+        "QR1": "QR1.lbx",
+        "QR2": "QR2.lbx"
+    },
+    "MediaName": "2.4\" x 3.9\"",
+    "Print": false,
+    "EventBriteAccessToken": "",
+    "ServiceBusQueue": "Endpoint=sb://;EntityPath=denver-dev-day"
+}
