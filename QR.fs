@@ -6,6 +6,8 @@ open System.Drawing.Drawing2D
 open System.IO
 open QRCoder
 
+let [<Literal>] private QrSize = 330
+
 let generate (ico: string) (link: string option) =
     let generate' link' =
         let generator = PayloadGenerator.Url(link')
@@ -14,16 +16,16 @@ let generate (ico: string) (link: string option) =
         let qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.H)
         use qrCode = new QRCode(qrCodeData)
         use ico = new Bitmap(ico)
-        let qrCodeAsBitmap = qrCode.GetGraphic(10, Color.Black, Color.White, ico, 25, 30, false)
+        let qrCodeAsBitmap = qrCode.GetGraphic(10, Color.Black, Color.White, ico, 20, 25, false)
         let fileName = Path.GetTempFileName()
 
-        let scale = min (330.0 / float qrCodeAsBitmap.Width) (330.0 / float qrCodeAsBitmap.Height)
-        use bmp = new Bitmap(330, 330);
+        let scale = float QrSize / float qrCodeAsBitmap.Width
+        use bmp = new Bitmap(QrSize, QrSize);
         let graph = Graphics.FromImage(bmp);
         graph.InterpolationMode <- InterpolationMode.HighQualityBilinear
-        let scaleWidth = int (float qrCodeAsBitmap.Width * scale)
-        let scaleHeight = int (float qrCodeAsBitmap.Height * scale)
-        graph.DrawImage(qrCodeAsBitmap, (330 - scaleWidth)/2, (330 - scaleHeight)/2, scaleWidth, scaleHeight)
+        let scaledSize = int (float qrCodeAsBitmap.Width * scale)
+        let offset = (QrSize - scaledSize) / 2
+        graph.DrawImage(qrCodeAsBitmap, offset, offset, scaledSize, scaledSize)
 
         bmp.Save(fileName, ImageFormat.Bmp)
         fileName
