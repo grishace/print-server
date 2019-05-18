@@ -1,17 +1,15 @@
 module Printer
 
 open System.IO
-open Types
 open Configuration
+open QR
+open Types
 
 let print (attendee: Attendee) =
-    let cnt opt = opt |> Option.map (fun _ -> 1) |> Option.defaultValue 0
-    let qrs = (cnt attendee.LinkedIn) + (cnt attendee.Twitter)
 
     let template, hasTemplate =
-        (match qrs with
-            | 1 -> cfg.Templates.QR1
-            | 2 -> cfg.Templates.QR2
+        (match attendee.LinkedIn, attendee.Twitter with
+            | Some _, _ | _, Some _ -> cfg.Templates.QR
             | _ -> cfg.Templates.Default)
         |> Option.ofObj
         |> Option.map (fun t -> t, true)
@@ -23,10 +21,8 @@ let print (attendee: Attendee) =
     setText "LastName" attendee.LastName
     setText "TicketType" (attendee.Ticket |> Option.defaultValue "")
 
-    if qrs > 0 && hasTemplate then
-        let qrt n = if qrs = 1 then "QR" else n
-        attendee.LinkedIn |> Option.iter (Bpac.setImage doc (qrt "QR1"))
-        attendee.Twitter |> Option.iter (Bpac.setImage doc (qrt "QR2"))
+    if hasTemplate then
+        QR.generate attendee |> Option.iter (Bpac.setImage doc "QR")
 
     let job = sprintf "%s_%s" attendee.FirstName attendee.LastName
     if cfg.Print

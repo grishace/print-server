@@ -14,11 +14,7 @@ let main _ =
             let api = Encoding.UTF8.GetString(m.Body)
             let! attendee = getAttendee api
             printfn "%A\n" attendee
-            Printer.print {
-                attendee with
-                    LinkedIn = QR.generate @"assets\linkedin.bmp" attendee.LinkedIn
-                    Twitter = QR.generate @"assets\twitter.bmp" attendee.Twitter
-            }
+            Printer.print attendee
         } |> Async.StartAsTask :> Task
 
     let exceptionReceivedhandler (m: ExceptionReceivedEventArgs) =

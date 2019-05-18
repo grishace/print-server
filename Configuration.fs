@@ -10,14 +10,12 @@ open Microsoft.Extensions.Configuration.Json
 type TemplatesConfiguration =
     {   TemplatesFolder: string
         Default: string
-        QR1: string
-        QR2: string
+        QR: string
     }
     static member DefaultConfig =
         {   TemplatesFolder = "./assets/templates/"
             Default = "template.lbx"
-            QR1 = String.Empty
-            QR2 = String.Empty
+            QR = String.Empty
         }
 
 [<CLIMutable>]

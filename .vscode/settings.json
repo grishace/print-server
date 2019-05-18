@@ -1,0 +1,4 @@
+{
+    "FSharp.fsacRuntime": "netcore",
+    "FSharp.disableFailedProjectNotifications": true
+}
