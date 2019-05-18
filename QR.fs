@@ -20,7 +20,7 @@ let generate (ico: string) (link: string option) =
         let scale = min (330.0 / float qrCodeAsBitmap.Width) (330.0 / float qrCodeAsBitmap.Height)
         use bmp = new Bitmap(330, 330);
         let graph = Graphics.FromImage(bmp);
-        graph.InterpolationMode <- InterpolationMode.NearestNeighbor
+        graph.InterpolationMode <- InterpolationMode.HighQualityBilinear
         let scaleWidth = int (float qrCodeAsBitmap.Width * scale)
         let scaleHeight = int (float qrCodeAsBitmap.Height * scale)
         graph.DrawImage(qrCodeAsBitmap, (330 - scaleWidth)/2, (330 - scaleHeight)/2, scaleWidth, scaleHeight)
