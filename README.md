@@ -1,12 +1,12 @@
-### Helping [Denver Dev Day](https://denverdevday.github.io/) with F#
+### Helping DenverDevDay with F#
 
-DenverDevDay organization committee was using an event-hosting website for 3 years before the company behind it was sold and community license was revoked. Since the event is organized by community there was no budget to pay for the commercial license so organizers decided to move on to use free services for the event.
+[Denver Dev Day](https://denverdevday.github.io/) organization committee was using an event-hosting website for 3 years before the company behind it was sold and community license was revoked. Since the event is organized by community there was no budget to pay for the commercial license so organizers decided to move on to use free services for the event.
 
 There was one feature missing though. Scan the attendee ticket and print attendee's badge right away, which brings very professional touch to the event and streamlines the check-in process.
 
 This project is to fill the gap.
 
-<!-- TODO: check-in process video -->
+[![EventBrite integration demo](http://img.youtube.com/vi/YbJaJDEbzdk/0.jpg)](http://www.youtube.com/watch?v=YbJaJDEbzdk "EventBrite integration demo")
 
 ### F# Challenges
 
@@ -56,7 +56,7 @@ it from the found items below. Don't forget to save your logic app!
 ### Run
 
 * `dotnet run --no-build`
-* Or `dotnet publish -r win-x86` navigate to the publish folder and run `print-server.exe`
+* Or `dotnet publish` navigate to the publish folder and run `print-server.exe`
 
 ### TODO
 
