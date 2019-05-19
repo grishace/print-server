@@ -1,10 +1,10 @@
 ### EventBrite integration with F#
 
-[Denver Dev Day](https://denverdevday.github.io/) organization committee was using an event-hosting website for 3 years before the company behind it was sold and community license was revoked. Since the event is organized by community there was no budget to pay for the commercial license so organizers decided to move on to use free services for the event.
+The [Denver Dev Day](https://denverdevday.github.io/) organization committee was using an event-hosting website for 3 years before the company behind it was sold and their community license was revoked. Because the event is organized by the community, there was no budget to pay for the commercial license, so organizers decided to move on to use free services for the event.
 
-There was one feature missing though. Scan the attendee ticket and print attendee's badge right away, which brings very professional touch to the event and streamlines the check-in process.
+However, there was one feature missing. Printing the attendee's badge right away -automagically- after scanning the attendee's ticket adds a professional touch and streamlines the check-in process.
 
-This project is to fill the gap.
+The purpose of this project is to fill that gap.
 
 [![EventBrite integration demo](http://img.youtube.com/vi/YbJaJDEbzdk/0.jpg)](http://www.youtube.com/watch?v=YbJaJDEbzdk "EventBrite integration demo")
 
@@ -35,7 +35,7 @@ there in the project file (just commented out) for you to try.
 ### Configure
 
 * Log into your Azure subscription.
-* Create Service Bus Namespace + message queue.
+* Create Service Bus Namespace and a message queue.
 * Deploy Logic App using `eb-integration.logicapp.json`. Azure portal doesn't save connection information in the
 action block, therefore create a Send Message action using the service bus and selection the message queue
 from the drop-down list.
@@ -49,8 +49,8 @@ it from the found items below. Don't forget to save your logic app!
 * Create a new app registration under App Management.
 * Copy your personal OAuth token into `print-server.json` `EventBriteAccessToken` parameter.
 ![EventBrite App Management](https://github.com/grishace/print-server/blob/master/images/eventbrite-app.png)
-* Copy printer SAS connection string into the `ServiceBusQueue` parameter.
-* Design your badge with P-touch software and save them into `./assets/templates/` folder.
+* Copy queue connection string into the `ServiceBusQueue` parameter.
+* Design your badge with the P-touch editor and save it into the `./assets/templates/` folder.
 ![P-touch](https://github.com/grishace/print-server/blob/master/images/p-touch.png)
 
 ### Run
