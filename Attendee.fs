@@ -6,8 +6,7 @@ open System.Text.RegularExpressions
 open Utf8Json
 
 open Types
-
-let [<Literal>] private EventBriteAccessToken = "3M5NLNHWTAMY2BE7VM5R"
+open Configuration
 
 let getTicketType className =
     let pattern (patt: string) (str: string) = if str.Contains patt then Some patt else None
@@ -51,7 +50,7 @@ let private validate (rx: Regex) a =
 let getAttendee (api: string) =
     async {
         use http = new HttpClient()
-        http.DefaultRequestHeaders.Add("Authorization", (sprintf "Bearer %s" EventBriteAccessToken))
+        http.DefaultRequestHeaders.Add("Authorization", (sprintf "Bearer %s" cfg.EventBriteAccessToken))
         let! res' = http.GetAsync(api) |> Async.AwaitTask
         let! res'' = res'.Content.ReadAsByteArrayAsync() |> Async.AwaitTask
         let json = Encoding.UTF8.GetString(res'')
