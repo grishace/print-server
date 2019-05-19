@@ -1,4 +1,4 @@
-### Helping DenverDevDay with F#
+### EventBrite integration with F#
 
 [Denver Dev Day](https://denverdevday.github.io/) organization committee was using an event-hosting website for 3 years before the company behind it was sold and community license was revoked. Since the event is organized by community there was no budget to pay for the commercial license so organizers decided to move on to use free services for the event.
 
