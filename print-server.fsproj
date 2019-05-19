@@ -7,6 +7,17 @@
     <RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <RootNamespace>print_server</RootNamespace>
   </PropertyGroup>
+  <!-- ItemGroup>
+    <COMReference Include="Brother b-PAC 3.2 Type Library">
+      <Guid>{90359d74-b7d9-467f-b938-3883f4cab582}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <Isolated>False</Isolated>
+      <WrapperTool>tlbimp</WrapperTool>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup -->
   <ItemGroup>
     <Compile Include="Configuration.fs" />
     <Compile Include="Bpac.fs" />

@@ -3,8 +3,6 @@ module Configuration
 open System
 open System.IO
 open Microsoft.Extensions.Configuration
-open Microsoft.Extensions.Configuration.Binder
-open Microsoft.Extensions.Configuration.Json
 
 [<CLIMutable>]
 type TemplatesConfiguration =
