@@ -30,7 +30,7 @@ The purpose of this project is to fill that gap.
 but 32-bit version works perfectly.
 * .NET Core 3.0 is supposed to bring COM interop to the .NET Core world, but the path described [here](https://github.com/dotnet/samples/tree/master/core/extensions/ExcelDemo) didn't work either, but b-PAC COM reference is
 there in the project file (just commented out) for you to try.
-* `dotnet buld`
+* `dotnet build`
 
 ### Configure
 
@@ -57,8 +57,3 @@ it from the found items below. Don't forget to save your logic app!
 
 * `dotnet run --no-build`
 * Or `dotnet publish` navigate to the publish folder and run `print-server.exe`
-
-### TODO
-
-* COM-interop in .NET Core 3
-* FAKE build + Service Bus and Logic App ARM deployment
