@@ -1,41 +1,30 @@
 module Types
 
-open System.Runtime.Serialization
-
-[<CLIMutable>]
-type Answer =
-    {   [<DataMember(Name = "question")>]
-        Question: string
-        [<DataMember(Name = "type")>]
-        Type: string
-        [<DataMember(Name = "answer")>]
-        Answer: string
-    }
+open System.Text.Json.Serialization
 
 [<CLIMutable>]
 type Profile =
-    {   [<DataMember(Name = "first_name")>]
+    {
+        [<JsonPropertyName("first_name")>]
         FirstName: string
-        [<DataMember(Name = "last_name")>]
+        [<JsonPropertyName("last_name")>]
         LastName: string
-        [<DataMember(Name = "email")>]
+        [<JsonPropertyName("email")>]
         Email: string
     }
 
 [<CLIMutable>]
 type EventBriteApiResponse =
-    {   [<DataMember(Name = "profile")>]
+    {
+        [<JsonPropertyName("profile")>]
         Profile: Profile
-        [<DataMember(Name = "ticket_class_name")>]
+        [<JsonPropertyName("ticket_class_name")>]
         TicketClass: string
-        [<DataMember(Name = "answers")>]
-        Answers: Answer array
     }
 
 type Attendee =
-    {   FirstName: string
+    {
+        FirstName: string
         LastName: string
         Ticket: string option
-        LinkedIn: string option
-        Twitter: string option
     }

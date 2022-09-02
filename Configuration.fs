@@ -8,14 +8,10 @@ open Microsoft.Extensions.Configuration
 type TemplatesConfiguration =
     {   TemplatesFolder: string
         Default: string
-        QR1: string
-        QR2: string
     }
     static member DefaultConfig =
         {   TemplatesFolder = "./assets/templates/"
             Default = "template.lbx"
-            QR1 = String.Empty
-            QR2 = String.Empty
         }
 
 [<CLIMutable>]
@@ -23,7 +19,9 @@ type PrintConfiguration =
     {   Templates: TemplatesConfiguration
         MediaName: string
         Print: bool
+        EventDate: string
         EventBriteAccessToken: string
+        ServiceBusConnection: string
         ServiceBusQueue: string
     }
     static member DefaultConfig =
@@ -31,7 +29,9 @@ type PrintConfiguration =
             Templates = TemplatesConfiguration.DefaultConfig
             MediaName = "2.4\" x 3.9\""
             Print = false
+            EventDate = String.Empty
             EventBriteAccessToken = String.Empty
+            ServiceBusConnection = String.Empty
             ServiceBusQueue = String.Empty
         }
 

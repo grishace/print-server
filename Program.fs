@@ -1,41 +1,37 @@
 ﻿open System
 open System.Text
 open System.Threading.Tasks
-open Microsoft.Azure.ServiceBus
+open Azure.Messaging.ServiceBus
 
 open Attendee
 open Configuration
 
-[<EntryPoint>]
-let main _ =
+let receiveHandler (args: ProcessMessageEventArgs) =
+    task {
+        let api = Encoding.UTF8.GetString(args.Message.Body)
+        let! attendee = getAttendee api
+        printfn "%A %b" attendee (Printer.print attendee)
 
-    let receiveHandler (m: Message) _ =
-        async {
-            let api = Encoding.UTF8.GetString(m.Body)
-            let! attendee = getAttendee api
-            printfn "%A\n" attendee
-            Printer.print {
-                attendee with
-                    LinkedIn = QR.generate @"assets\linkedin.bmp" attendee.LinkedIn
-                    Twitter = QR.generate @"assets\twitter.bmp" attendee.Twitter
-            }
-        } |> Async.StartAsTask :> Task
+        do! args.CompleteMessageAsync(args.Message);
+    } :> Task
 
-    let exceptionReceivedhandler (m: ExceptionReceivedEventArgs) =
-        async {
-            printfn "*** %A" m.Exception
-        } |> Async.StartAsTask :> Task
+let exceptionReceivedhandler (args: ProcessErrorEventArgs) =
+    task {
+        printfn "*** %A" args.Exception
+    } :> Task
 
-    async {
-        let client = QueueClient(ServiceBusConnectionStringBuilder(cfg.ServiceBusQueue))
-        let options = MessageHandlerOptions(Func<_,_>(exceptionReceivedhandler), AutoComplete = true)
-        client.RegisterMessageHandler(receiveHandler, options)
+let main = 
+    task {
+        use client = new ServiceBusClient(cfg.ServiceBusConnection);
+        use processor = client.CreateProcessor(cfg.ServiceBusQueue, ServiceBusProcessorOptions(AutoCompleteMessages = false, MaxConcurrentCalls = 1))
+
+        processor.add_ProcessMessageAsync receiveHandler
+        processor.add_ProcessErrorAsync exceptionReceivedhandler
+
+        do! processor.StartProcessingAsync()
+
         printfn "Waiting for icoming events. Press <Enter> to quit..."
-
         Console.ReadLine() |> ignore
+    }
 
-        do! client.CloseAsync() |> Async.AwaitTask
-    } |> Async.RunSynchronously
-
-    0
-
+main.Wait()

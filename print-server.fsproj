@@ -1,37 +1,47 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <!-- Brother bpac x64 SDK doesn't work properly with .NET Core -->
-    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
-    <RootNamespace>print_server</RootNamespace>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RootNamespace>PrintServer</RootNamespace>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-  <!-- ItemGroup>
-    <COMReference Include="Brother b-PAC 3.2 Type Library">
-      <Guid>{90359d74-b7d9-467f-b938-3883f4cab582}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>3</VersionMinor>
-      <Lcid>0</Lcid>
-      <Isolated>False</Isolated>
-      <WrapperTool>tlbimp</WrapperTool>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup -->
+
   <ItemGroup>
+    <None Include="assets\templates\template.lbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="print-server.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Configuration.fs" />
     <Compile Include="Bpac.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Attendee.fs" />
-    <Compile Include="QR.fs" />
     <Compile Include="Printer.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="print-server.json" CopyToOutputDirectory="PreserveNewest" />
+    <COMReference Include="bpac">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>3</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>90359d74-b7d9-467f-b938-3883f4cab582</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="$(ProjectDir)assets\**" CopyToOutputDirectory="PreserveNewest" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.10.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
   </ItemGroup>
-  <Import Project=".paket\Paket.Restore.targets" />
+
+  <ItemGroup />
+
 </Project>
