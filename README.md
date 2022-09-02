@@ -28,8 +28,8 @@ The purpose of this project is to fill that gap.
 
 * Unfortunately b-PAC SDK doesn't work with 64-bit .NET Core (or at least I didn't find how to make it work),
 but 32-bit version works perfectly.
-* .NET Core 3.0 is supposed to bring COM interop to the .NET Core world, but the path described [here](https://github.com/dotnet/samples/tree/master/core/extensions/ExcelDemo) didn't work either, but b-PAC COM reference is
-there in the project file (just commented out) for you to try.
+* ~~.NET Core 3.0 is supposed to bring COM interop to the .NET Core world, but the path described [here](https://github.com/dotnet/samples/tree/master/core/extensions/ExcelDemo) didn't work either, but b-PAC COM reference is
+there in the project file (just commented out) for you to try.~~  COM interop assembly works after migrating project to the .NET 6.0
 * `dotnet build`
 
 ### Configure
