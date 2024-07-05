@@ -2,7 +2,9 @@
 open System.Text
 open System.Threading.Tasks
 open Azure.Messaging.ServiceBus
+open Argu
 
+open Types
 open Attendee
 open Configuration
 
@@ -20,7 +22,7 @@ let exceptionReceivedhandler (args: ProcessErrorEventArgs) =
         printfn "*** %A" args.Exception
     } :> Task
 
-let main = 
+let server () = 
     task {
         use client = new ServiceBusClient(cfg.ServiceBusConnection);
         use processor = client.CreateProcessor(cfg.ServiceBusQueue, ServiceBusProcessorOptions(AutoCompleteMessages = false, MaxConcurrentCalls = 1))
@@ -34,4 +36,46 @@ let main =
         Console.ReadLine() |> ignore
     }
 
-main.Wait()
+[<CliPrefix(CliPrefix.Dash)>]
+type PrintArgs =
+     | [<AltCommandLine("-f")>] FirstName of string
+     | [<AltCommandLine("-l")>] LastName of string
+     | [<AltCommandLine("-t")>] TicketType of string option
+
+     interface IArgParserTemplate with
+        member this.Usage =
+            match this with
+            | FirstName _ -> "First Name"
+            | LastName _ -> "Last Name"
+            | TicketType _ -> "Ticket Type"
+
+and  PrintServerArgs =
+    | [<CliPrefix(CliPrefix.None)>] Server
+    | [<CliPrefix(CliPrefix.None)>] Print of ParseResults<PrintArgs>
+
+    interface IArgParserTemplate with
+        member this.Usage =
+            match this with
+            | Server -> "Listener mode"
+            | Print _ -> "Print mode"
+
+let parser = ArgumentParser.Create<PrintServerArgs>(programName = "print-server.exe")
+
+[<EntryPoint>]
+let main argv =
+    try
+        let res = parser.ParseCommandLine(inputs = argv, raiseOnUsage = true)
+        let arg = res.GetAllResults()
+
+        match arg with
+        |  [Server] -> server().Wait()
+        |  [Print printArgs] ->
+            let attendee = {
+                FirstName = printArgs.GetResult(FirstName)
+                LastName = printArgs.GetResult(LastName)
+                Ticket = printArgs.GetResult(TicketType)
+            }
+            printfn "%A %b" attendee (Printer.print attendee)
+        | _ -> printfn "%s" (parser.PrintUsage())
+        0
+    with :? ArguParseException as e -> eprintfn "%s" e.Message; 1

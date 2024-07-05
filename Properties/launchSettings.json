@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "print-server": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -37,7 +37,7 @@ type PrintConfiguration =
 
 let private cfgBuilder (file: string) =
     ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
+        .SetBasePath(AppContext.BaseDirectory)
         .AddJsonFile(file)
         .Build()
 
